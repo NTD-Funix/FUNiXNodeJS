@@ -1,20 +1,21 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
-app.use('/', (req, res, next) => {
-    console.log('In First Middleware - This allways run!');
-    next();
-});
+app.use(bodyParser.urlencoded({ extended: false}));
 
 app.use('/add-product', (req, res, next) => {
-    console.log('In Second Middleware!');
-    res.send('<p>The Add product page</p>');
+    res.send('<form action="/product" method="POST"><input type="text" name="title"><button type="submit">Add Product</button></form>');
 });
 
+app.use('/product', (req, res, next) => {
+    console.log(req.body);
+    res.redirect('/');
+})
+
 app.use('/', (req, res, next) => {
-    console.log('In Third Middleware!');
-    res.send('<p>Hello from Express.js</p>')
+    res.send('<h1>Hello from Express.js</h1>')
 })
 
 app.listen(3000);
