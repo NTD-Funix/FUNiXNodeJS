@@ -5,7 +5,7 @@ const expressHandlebars = require('express-handlebars');
 
 const app = express();
 
-app.engine('handlebars', expressHandlebars());   // Đăng ký template trong trường hợp k được tích hợp.
+app.engine('handlebars', expressHandlebars({layoutsDir: 'views/layouts', defaultLayout: 'main-layout'}));   // Đăng ký template trong trường hợp k được tích hợp.
 app.set('view engine', 'handlebars');
 app.set('views', 'views');
 /*app.set('view engine', 'pug');   // Đăng ký template trong trường hợp được tích hợp.
