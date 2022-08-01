@@ -1,8 +1,1 @@
-[
-    {
-        "title":"Product 1",
-        "image":"https://tse4.mm.bing.net/th?id=OIP.sxTl_KfwDsa6Sj16kOk62gHaE7&pid=Api&P=0",
-        "price":"1200000",
-        "description":"dsadsadas"
-    }
-]
+[{"title":"Product 1","image":"https://tse4.mm.bing.net/th?id=OIP.sxTl_KfwDsa6Sj16kOk62gHaE7&pid=Api&P=0","price":"1200000","description":"dsadsadas"},{"title":"Product 2","image":"https://tse4.mm.bing.net/th?id=OIP.sxTl_KfwDsa6Sj16kOk62gHaE7&pid=Api&P=0","price":"1200000","description":"abc"}]
