@@ -4,7 +4,7 @@ const path = require('path');
 // const p = path.join(require.main.filename, 'data', 'cart.json');
 
 const rootDir = require('../util/path');
-const p = path.join(rootDir, 'data', 'cart.json');
+const p = path.join(rootDir, 'data', 'cart.json'); 
 
 module.exports = class Cart {
     static addProduct (id, productPrice) {
@@ -51,4 +51,16 @@ module.exports = class Cart {
             });
         });
     };
+
+    static getCart (callback) {
+        fs.readFile(p, (err, fileContent) => {
+            const cart = JSON.parse(fileContent);
+            if(err) {
+                callback(null)
+            } else {
+                callback(cart);
+            }
+        });
+    }
+
 };
