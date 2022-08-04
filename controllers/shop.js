@@ -15,13 +15,15 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodID = req.params.productID;
-  Product.findById(prodID, product => {
-    res.render('shop/product-detail', {
-      product: product,
-      pageTitle: product.title,
-      path: '/products'
-    });
-  });
+  Product.findById(prodID)
+    .then(([rows, fielData]) => {
+      res.render('shop/product-detail', {
+        product: rows[0],
+        pageTitle: rows[0].title,
+        path: '/product-detail'
+      });
+    })
+    .catch(err => console.log(err))
 };
 
 exports.getIndex = (req, res, next) => {
