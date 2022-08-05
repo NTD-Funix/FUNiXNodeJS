@@ -14,15 +14,24 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodID = req.params.productID;
-  Product.findById(prodID)
-    .then(([rows, fielData]) => {
+  // Product.findAll({where: {id: prodID}})
+  //   .then(products => {
+  //     res.render('shop/product-detail', {
+  //       product: products[0],
+  //       pageTitle: products[0].title,
+  //       path: '/product-detail'
+  //     });
+  //   })
+  //   .catch(err => console.log(err));
+  Product.findByPk(prodID)
+    .then((product) => {
       res.render('shop/product-detail', {
-        product: rows[0],
-        pageTitle: rows[0].title,
+        product: product,
+        pageTitle: product.title,
         path: '/product-detail'
       });
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
 };
 
 exports.getIndex = (req, res, next) => {
