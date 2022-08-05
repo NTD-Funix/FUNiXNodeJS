@@ -15,6 +15,8 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const Product = require('./models/product');
 const User = require('./models/user');
+const Cart = require('./models/cart');
+const CartItem = require('./models/cart-item');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -35,9 +37,12 @@ app.use(errorController.get404);
 
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE'});
 User.hasMany(Product);
-
-// sequelize.sync({force: true})
-sequelize.sync()
+User.hasOne(Cart);
+Cart.belongsTo(User);
+Cart.belongsToMany(Product, { through: CartItem });    // 1 Cart has many products.
+Product.belongsToMany(Cart, { through: CartItem });    // 1 Product can into many Carts.
+sequelize.sync({force: true})
+// sequelize.sync()
     .then((result) => {
         return User.findByPk(1)
         // console.log(result)
