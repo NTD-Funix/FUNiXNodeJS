@@ -41,8 +41,8 @@ User.hasOne(Cart);
 Cart.belongsTo(User);
 Cart.belongsToMany(Product, { through: CartItem });    // 1 Cart has many products.
 Product.belongsToMany(Cart, { through: CartItem });    // 1 Product can into many Carts.
-sequelize.sync({force: true})
-// sequelize.sync()
+// sequelize.sync({force: true})
+sequelize.sync()
     .then((result) => {
         return User.findByPk(1)
         // console.log(result)
@@ -54,7 +54,9 @@ sequelize.sync({force: true})
         return user;
     })
     .then(user => {
-        console.log(user);
+        return user.createCart();
+    })
+    .then(cart => {
         app.listen(3000);
     })
     .catch(err => console.log(err))
