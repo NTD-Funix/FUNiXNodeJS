@@ -1,9 +1,30 @@
 <%- include('../includes/head.ejs') %>
-    </head>
+    <link rel="stylesheet" href="/css/cart.css">
+</head>
 
-    <body>
-        <%- include('../includes/navigation.ejs') %>
-        <main>
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+        <% if(orders.length > 0) { %>
+                <% orders.forEach(order => { %>
+                    <li>
+                        <h1># <%= order.id %></h1>
+                        <ul>
+                            <% order.products.forEach(product => { %> 
+                                <li><%= product.title %> (<%= product.orderItem.quantity %>)</li>
+                            <% }); %>
+                        </ul>
+                    </li>
+                <% }) %>
+                </ul>
+                <hr>
+                <div class="centered">
+                    <form action="/checkout" method="POST">
+                        <button class="btn" type="submit">Checkout Now!</button>
+                    </form>
+                </div>
+        <% } else { %>
             <h1>Nothing there!</h1>
-        </main>
-        <%- include('../includes/end.ejs') %>
+        <% } %>
+    </main>
+<%- include('../includes/end.ejs') %>
