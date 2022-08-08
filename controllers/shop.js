@@ -22,7 +22,7 @@ exports.getProduct = (req, res, next) => {
   //     });
   //   })
   //   .catch(err => console.log(err));
-  Product.findByPk(prodID)
+  Product.findById(prodID)
     .then((product) => {
       res.render("shop/product-detail", {
         product: product,
