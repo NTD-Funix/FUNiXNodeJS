@@ -12,23 +12,38 @@
 // const Sequelize = require('sequelize');
 
 // const sequelize = new Sequelize('node-complete', 'root', 'Maithuhuyen5893@', {
-//         dialect: 'mysql', 
+//         dialect: 'mysql',
 //         host: 'localhost'
 // });
 
 // module.exports = sequelize;
 
-const mongodb = require('mongodb');
+const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
 
+let _db;
+
 const mongoConnect = (callback) => {
-        const mongoDatabaseLink = 'mongodb+srv://DaiNguyen:Maithuhuyen5893@cluster0.wzqosae.mongodb.net/?retryWrites=true&w=majority';
-        MongoClient.connect(mongoDatabaseLink)
-                .then(client => {
-                        console.log('Connected');
-                        callback(client)
-                })
-                .catch(err => console.log(err));
+  const mongoDatabaseLink =
+    "mongodb+srv://DaiNguyen:Maithuhuyen5893@cluster0.wzqosae.mongodb.net/shop?retryWrites=true&w=majority";
+  MongoClient.connect(mongoDatabaseLink)
+    .then((client) => {
+      console.log("Connected");
+      _db = client.db();
+      callback();
+    })
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
 };
 
-module.exports = mongoConnect;
+const getDb = () => {
+  if (_db) {
+    return _db;
+  }
+  throw "No database found!";
+};
+
+exports.mongoConnect = mongoConnect;
+exports.getDb = getDb;

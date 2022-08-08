@@ -2,26 +2,24 @@
 
 // const sequelize = require('../util/database');
 
-const mongoConnect = require('../util/database');
+const getDb = require("../util/database").getDb;
 class Product {
-  constructor (title, price, description, imageUrl) {
+  constructor(title, price, description, imageUrl) {
     this.title = title;
     this.price = price;
     this.description = description;
     this.imageUrl = imageUrl;
   }
 
-  save () {
-
-  }
+  save() {}
 }
 
-const Product = sequelize.define('product', {
+const Product = sequelize.define("product", {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   title: Sequelize.STRING,
   price: {
@@ -30,12 +28,12 @@ const Product = sequelize.define('product', {
   },
   imageUrl: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   description: {
     type: Sequelize.STRING,
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
 
 module.exports = Product;
