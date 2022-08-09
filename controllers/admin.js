@@ -1,3 +1,5 @@
+const mongodb = require('mongodb');
+
 const Product = require("../models/product");
 
 exports.getAddProduct = (req, res, next) => {
@@ -53,32 +55,20 @@ exports.postEditProduct = (req, res, next) => {
   const updatedImageUrl = req.body.imageUrl;
   const updatedDesc = req.body.description;
   const updatedPrice = req.body.price;
-  Product.findByPk(prodID)
-    .then(product => {
-      product.title = updatedTitle;
-      product.price = updatedPrice;
-      product.description = updatedDesc;
-      product.imageUrl = updatedImageUrl;
-      return product.save();
-    })
+
+  const product = new Product(
+    updatedTitle,
+    updatedPrice,
+    updatedDesc,
+    updatedImageUrl,
+    new mongodb.ObjectId(prodID)
+  );
+  product.save()
     .then(result => {
       console.log('UPDATED PRODUCT');
       res.redirect('/admin/products');
     })
     .catch(err => console.log(err))
-
-  // Product.update({
-  //   title: updatedTitle,
-  //   imageUrl: updatedImageUrl,
-  //   description: updatedDesc,
-  //   price: updatedPrice}, {
-  //     where: {id: prodID}
-  //   })
-  //   .then((result) => {
-  //     console.log('UPDATED PRODUCT');
-  //     res.redirect('/admin/products');
-  //   })
-  //   .catch(err => console.log(err));
 };
 
 // exports.postDeleteProduct = (req, res, next) => {
@@ -105,7 +95,6 @@ exports.postEditProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
     .then((products) => {
-      console.log(products);
       res.render("admin/products", {
         prods: products,
         pageTitle: "Admin Products",

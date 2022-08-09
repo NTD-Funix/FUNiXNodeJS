@@ -19,7 +19,7 @@ class Product {
     if (this._id) {
       dbOperation = db
         .collection('products')
-        .updateOne({ _id: new mongodb.ObjectId(this._id) }, { $set: this });
+        .updateOne({ _id: this._id }, { $set: this });
     } else {
       dbOperation = db.collection('products').insertOne(this);
     }
@@ -37,7 +37,6 @@ class Product {
       .find()
       .toArray()
       .then((products) => {
-        console.log(products);
         return products;
       })
       .catch((err) => console.log(err));
