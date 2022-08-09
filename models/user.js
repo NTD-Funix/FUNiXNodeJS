@@ -7,7 +7,7 @@ class User {
     constructor(username, email, cart, id) {
         this.name = username;
         this.email = email;
-        this.cart = cart;
+        this.cart = cart;   // cart: {items: [{product1}, {product2}...]}
         this._id = id;
     }
 
@@ -25,10 +25,18 @@ class User {
     };
 
     addToCart(product) {
-        // const cartProduct = this.cart.items.findIndex(cp => {
-        //     return cp._id === product._id;
-        // })
-        const updateCart = { items: [{ productId: product._id, quantity: 1 }] };
+        const cartProductIndex = this.cart.items.findIndex(cp => {
+            return cp.productId.toString() === product._id.toString();
+        });
+        let newQuantity = 1;
+        const updateCartItems = [...this.cart.items];
+        if (cartProductIndex >= 0) {
+            newQuantity = this.cart.items[cartProductIndex].quantity + 1;
+            updateCartItems[cartProductIndex].quantity = newQuantity;
+        } else {
+            updateCartItems.push({ productId: product._id, quantity: newQuantity })
+        }
+        const updateCart = { items: updateCartItems };
         const db = getDb();
         return db
             .collection('users')
