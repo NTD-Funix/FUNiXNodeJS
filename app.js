@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const errorController = require("./controllers/error");
 // const sequelize = require('./util/database');
 const mongoConnect = require("./util/database").mongoConnect;
+const User = require('./models/user');
 
 const app = express();
 
@@ -26,13 +27,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res, next) => {
-  // User.findByPk(1)
-  //     .then(user => {
-  //         req.user = user;
-  //         next();
-  //     })
-  //     .catch(err => console.log(err));
-  next();
+  User.findById("62f2400adb1522eae4cabb60")
+    .then(user => {
+      req.user = user;
+      next();
+    })
+    .catch(err => console.log(err));
 });
 
 app.use("/admin", adminRoutes);
