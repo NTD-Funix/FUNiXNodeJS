@@ -50,8 +50,18 @@ class Product {
       .find({ _id: new mongodb.ObjectId(prodId) })
       .next()
       .then((product) => {
-        console.log(product);
         return product;
+      })
+      .catch((err) => console.log(err));
+  };
+
+  static deleteById(id) {
+    const db = getDb();
+    return db
+      .collection('products')
+      .deleteOne({ _id: new mongodb.ObjectId(id) })
+      .then(result => {
+        console.log('DELETE PRODUCT');
       })
       .catch((err) => console.log(err));
   }
