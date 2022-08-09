@@ -28,11 +28,11 @@ class User {
         // const cartProduct = this.cart.items.findIndex(cp => {
         //     return cp._id === product._id;
         // })
-        const updateCart = { items: [{ ...product, quantity: 1 }] };
+        const updateCart = { items: [{ productId: product._id, quantity: 1 }] };
         const db = getDb();
         return db
             .collection('users')
-            .updateOne({ _id: new ObjectId(this._id) }, { $set: { cart: updateCart } });
+            .updateOne({ _id: this._id }, { $set: { cart: updateCart } });
     }
 
     static findById(userId) {
