@@ -75,9 +75,7 @@ class User {
 			.updateOne(
 				{ _id: this._id },
 				{ $set: { cart: { items: updateCartItems } } }
-			)
-			.then((result) => console.log("DELETE PRODUCT IN CART"))
-			.catch((err) => console.log(err));
+			);
 	}
 
 	addOrder() {
@@ -99,6 +97,14 @@ class User {
 					.collection("users")
 					.updateOne({ _id: this._id }, { $set: { cart: { items: [] } } });
 			});
+	};
+
+	getOrders() {
+		const db = getDb();
+		return db
+			.collection('orders')
+			.find({ 'user._id': this._id })
+			.toArray();
 	}
 
 	static findById(userId) {
