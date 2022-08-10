@@ -1,49 +1,49 @@
-// const mysql = require('mysql2');
+// // const mysql = require('mysql2');
 
-// const pool = mysql.createPool({
-//     host: 'localhost',
-//     user: 'root',
-//     database: 'node-complete',
-//     password: 'Maithuhuyen5893@'
-// });
+// // const pool = mysql.createPool({
+// //     host: 'localhost',
+// //     user: 'root',
+// //     database: 'node-complete',
+// //     password: 'Maithuhuyen5893@'
+// // });
 
-// module.exports = pool.promise();
+// // module.exports = pool.promise();
 
-// const Sequelize = require('sequelize');
+// // const Sequelize = require('sequelize');
 
-// const sequelize = new Sequelize('node-complete', 'root', 'Maithuhuyen5893@', {
-//         dialect: 'mysql',
-//         host: 'localhost'
-// });
+// // const sequelize = new Sequelize('node-complete', 'root', 'Maithuhuyen5893@', {
+// //         dialect: 'mysql',
+// //         host: 'localhost'
+// // });
 
-// module.exports = sequelize;
+// // module.exports = sequelize;
 
-const mongodb = require("mongodb");
-const MongoClient = mongodb.MongoClient;
+// const mongodb = require("mongodb");
+// const MongoClient = mongodb.MongoClient;
 
-let _db;
+// let _db;
 
-const mongoConnect = (callback) => {
-  const mongoDatabaseLink =
-    "mongodb+srv://DaiNguyen:Maithuhuyen5893@cluster0.wzqosae.mongodb.net/shop?retryWrites=true&w=majority";
-  MongoClient.connect(mongoDatabaseLink)
-    .then((client) => {
-      console.log("Connected");
-      _db = client.db();
-      callback();
-    })
-    .catch((err) => {
-      console.log(err);
-      throw err;
-    });
-};
+// const mongoConnect = (callback) => {
+//   const mongoDatabaseLink =
+//     "mongodb+srv://DaiNguyen:Maithuhuyen5893@cluster0.wzqosae.mongodb.net/shop?retryWrites=true&w=majority";
+//   MongoClient.connect(mongoDatabaseLink)
+//     .then((client) => {
+//       console.log("Connected");
+//       _db = client.db();
+//       callback();
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       throw err;
+//     });
+// };
 
-const getDb = () => {
-  if (_db) {
-    return _db;
-  }
-  throw "No database found!";
-};
+// const getDb = () => {
+//   if (_db) {
+//     return _db;
+//   }
+//   throw "No database found!";
+// };
 
-exports.mongoConnect = mongoConnect;
-exports.getDb = getDb;
+// exports.mongoConnect = mongoConnect;
+// exports.getDb = getDb;
