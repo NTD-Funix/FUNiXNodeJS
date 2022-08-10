@@ -80,49 +80,14 @@ exports.postCartDeleteProduct = (req, res, next) => {
       console.log('DELETED PRODUCT IN CART');
       res.redirect('/cart');
     })
-    .catch(err => console.log(err))
-  // req.user
-  //   .getCart()
-  //   .then((cart) => {
-  //     return cart.getProducts({ where: { id: prodID } });
-  //   })
-  //   .then((products) => {
-  //     const product = products[0];
-  //     return product.cartItem.destroy();
-  //   })
-  //   .then(() => {
-  //     console.log("DELETED PRODUCT IN CART");
-  //     res.redirect("/cart");
-  //   })
-  //   .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
 
 exports.postOrder = (req, res, next) => {
-  let fetchedCart;
   req.user
-    .getCart()
-    .then((cart) => {
-      fetchedCart = cart;
-      return cart.getProducts();
-    })
-    .then((products) => {
-      return req.user
-        .createOrder()
-        .then((order) => {
-          return order.addProducts(
-            products.map((product) => {
-              product.orderItem = { quantity: product.cartItem.quantity };
-              return product;
-            })
-          );
-        })
-        .catch((err) => console.log(err));
-    })
-    .then(() => {
-      return fetchedCart.setProducts(null);
-    })
-    .then(() => {
-      res.redirect("/orders");
+    .addOrder()
+    .then(result => {
+      res.redirect('/orders')
     })
     .catch((err) => console.log(err));
 };
