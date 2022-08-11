@@ -15,11 +15,13 @@ const productSchema = new Schema({
         type: String,
         required: true
     },
-    imageUlr: {
+    imageUrl: {
         type: String,
         required: true
     }
 });
+
+module.exports = mongoose.model('Product', productSchema);
 
 
 // // const Sequelize = require('sequelize');
