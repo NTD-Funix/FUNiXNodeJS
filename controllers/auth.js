@@ -1,8 +1,6 @@
 const User = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
-    console.log(req.session.isLoggedIn)
-    console.log(req.session.user)
     // const isLoggedIn = req.get('Cookie').trim().split('=')[1] === 'true';
     res.render("auth/login", {
         path: "/login",
