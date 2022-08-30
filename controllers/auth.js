@@ -14,12 +14,15 @@ exports.postLogin = (req, res, next) => {
         .then(user => {
             req.session.user = user;
             req.session.isLoggedIn = true;
-            res.redirect('/');
+            req.session.save((err) => {         // Do cần mất 1 thời gian để lưu dữ liệu session vào 
+                console.log(err);               // database nên chuyển hướng luôn sẽ có hiện tượng bị lag. 
+                res.redirect('/');              // Vì vậy để k xảy ra hiện tượng trên ta cần đảm bảo 
+            });                                 // dữ liệu đã lưu xong vào database thì mới chuyển hướng.
         })
         .catch(err => console.log(err));
-}
+};
 
 exports.postLogout = (req, res, next) => {
     req.session.destroy();
     res.redirect('/');
-}
+};
