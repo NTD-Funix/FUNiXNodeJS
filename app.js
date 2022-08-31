@@ -58,12 +58,20 @@ app.use((req, res, next) => {
     });
 });
 
+// Truyền giá trị của isAuthenticated, csrfToken vào mọi views.
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
+// Routes
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
-
 app.use(errorController.get404);
 
+// Connect Mongoose.
 mongoose
   .connect(MONGODB_URI)
   .then(result => {
