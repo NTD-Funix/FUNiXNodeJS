@@ -20,14 +20,14 @@ exports.postLogin = (req, res, next) => {
                 return res.redirect('/login');
             }
             bcrypt.compare(password, user.password)          // Promise boolean (true or false).
-                .then(doMatch => {                                  // doMatch = true or false.
+                .then(doMatch => {                           // doMatch = true or false.
                     if (doMatch) {
                         req.session.user = user;
                         req.session.isLoggedIn = true;
-                        return req.session.save((err) => {         // Do cần mất 1 thời gian để lưu dữ liệu session vào 
-                            console.log(err);                      // database nên chuyển hướng luôn sẽ có hiện tượng bị lag. 
-                            res.redirect('/');                     // Vì vậy để k xảy ra hiện tượng trên ta cần đảm bảo 
-                        });                                        // dữ liệu đã lưu xong vào database thì mới chuyển hướng.
+                        return req.session.save((err) => {   // Do cần mất 1 thời gian để lưu dữ liệu session vào 
+                            console.log(err);                // database nên chuyển hướng luôn sẽ có hiện tượng bị lag. 
+                            res.redirect('/');               // Vì vậy để k xảy ra hiện tượng trên ta cần đảm bảo 
+                        });                                  // dữ liệu đã lưu xong vào database thì mới chuyển hướng.
                     };
                     res.redirect('/login');
                 })
