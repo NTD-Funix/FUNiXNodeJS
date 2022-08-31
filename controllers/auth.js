@@ -12,14 +12,29 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-    User.findById("62f4d3621cc36d9425adaf02")
+    const email = req.body.email;
+    const password = req.body.password;
+    User.findOne({ email: email })
         .then(user => {
-            req.session.user = user;
-            req.session.isLoggedIn = true;
-            req.session.save((err) => {         // Do cần mất 1 thời gian để lưu dữ liệu session vào 
-                console.log(err);               // database nên chuyển hướng luôn sẽ có hiện tượng bị lag. 
-                res.redirect('/');              // Vì vậy để k xảy ra hiện tượng trên ta cần đảm bảo 
-            });                                 // dữ liệu đã lưu xong vào database thì mới chuyển hướng.
+            if (!user) {
+                return res.redirect('/login');
+            }
+            bcrypt.compare(password, user.password)          // Promise boolean (true or false).
+                .then(doMatch => {                                  // doMatch = true or false.
+                    if (doMatch) {
+                        req.session.user = user;
+                        req.session.isLoggedIn = true;
+                        return req.session.save((err) => {         // Do cần mất 1 thời gian để lưu dữ liệu session vào 
+                            console.log(err);                      // database nên chuyển hướng luôn sẽ có hiện tượng bị lag. 
+                            res.redirect('/');                     // Vì vậy để k xảy ra hiện tượng trên ta cần đảm bảo 
+                        });                                        // dữ liệu đã lưu xong vào database thì mới chuyển hướng.
+                    };
+                    res.redirect('/login');
+                })
+                .catch((err) => {
+                    res.redirect('/login');
+                    console.log(err);
+                })
         })
         .catch(err => console.log(err));
 };

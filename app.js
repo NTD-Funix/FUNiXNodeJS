@@ -12,9 +12,11 @@ const User = require('./models/user');
 const MONGODB_URI = 'mongodb+srv://DaiNguyen:Maithuhuyen5893@cluster0.wzqosae.mongodb.net/shop?retryWrites=true&w=majority';
 
 const app = express();
+
+// Create store to stored session.
 const store = new MongoDBStore({
   uri: MONGODB_URI,
-  collection: 'sessions'
+  collection: 'sessions',
 })
 
 // Template Engine
