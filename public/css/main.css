@@ -43,7 +43,7 @@ form {
 .main-header__nav {
   height: 100%;
   width: 100%;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
 }
@@ -109,11 +109,14 @@ form {
   padding: 0;
 }
 
-.mobile-nav__item a {
+.mobile-nav__item a,
+.mobile-nav__item button {
   text-decoration: none;
   color: black;
   font-size: 1.5rem;
   padding: 0.5rem 2rem;
+  border: none;
+  background: transparent;
 }
 
 .mobile-nav__item a:active,
