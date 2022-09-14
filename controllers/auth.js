@@ -35,6 +35,7 @@ exports.postLogin = (req, res, next) => {
                             res.redirect('/');               // Vì vậy để k xảy ra hiện tượng trên ta cần đảm bảo 
                         });                                  // dữ liệu đã lưu xong vào database thì mới chuyển hướng.
                     };
+                    req.flash('error', 'Invalid email or password.');
                     res.redirect('/login');
                 })
                 .catch((err) => {
@@ -46,9 +47,16 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.getSignup = (req, res, next) => {
+    let message = req.flash('error');
+    if (message.length > 0) {
+        message = message[0];
+    } else {
+        message = null;
+    }
     res.render('auth/signup', {
         path: '/signup',
         pageTitle: 'Signup',
+        errorMessage: message,
     })
 };
 
@@ -59,6 +67,7 @@ exports.postSignup = (req, res, next) => {
     User.findOne({ email: email })
         .then(userDoc => {
             if (userDoc) {
+                req.flash('error', 'Email exists already.');
                 return res.redirect('/signup');
             }
             return bcrypt.hash(password, 12)
