@@ -32,6 +32,21 @@ exports.postAddProduct = (req, res, next) => {
     });
 };
 
+exports.getProducts = (req, res, next) => {
+  Product.find({ userId: req.user._id })
+    // .select('title price -_id')
+    // .populate('userId', 'name')
+    .then((products) => {
+      console.log(products)
+      res.render("admin/products", {
+        prods: products,
+        pageTitle: "Admin Products",
+        path: "/admin/products",
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
 exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode) {
@@ -61,22 +76,25 @@ exports.postEditProduct = (req, res, next) => {
   const updatedPrice = req.body.price;
   Product.findById(prodID)
     .then(product => {
+      console.log(product.userId, req.user._id)
+      if (product.userId.toString() !== req.user._id.toString()) {
+        return res.redirect("/");
+      }
       product.title = updatedTitle;
       product.price = updatedPrice;
       product.description = updatedDesc;
       product.imageUrl = updatedImageUrl;
-      return product.save();
-    })
-    .then(result => {
-      console.log('UPDATED PRODUCT');
-      res.redirect('/admin/products')
+      return product.save().then(result => {
+        console.log('UPDATED PRODUCT');
+        res.redirect('/admin/products')
+      });
     })
     .catch((err) => console.log(err));
 };
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodID = req.body.productID;
-  Product.findByIdAndDelete(prodID)
+  Product.deleteOne({ _id: prodID, userId: req.user._id })
     .then(() => {
       console.log('DELETED PRODUCT');
       res.redirect('/admin/products');
@@ -84,17 +102,3 @@ exports.postDeleteProduct = (req, res, next) => {
     .catch(err => console.log(err));
 };
 
-exports.getProducts = (req, res, next) => {
-  Product.find()
-    // .select('title price -_id')
-    // .populate('userId', 'name')
-    .then((products) => {
-      console.log(products)
-      res.render("admin/products", {
-        prods: products,
-        pageTitle: "Admin Products",
-        path: "/admin/products",
-      });
-    })
-    .catch((err) => console.log(err));
-};
