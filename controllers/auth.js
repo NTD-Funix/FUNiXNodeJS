@@ -85,6 +85,7 @@ exports.getSignup = (req, res, next) => {
             password: '',
             confirmPassword: '',
         },
+        validationErrors: [],
     });
 };
 
@@ -93,6 +94,7 @@ exports.postSignup = (req, res, next) => {
     const password = req.body.password;
     const confirmPassword = req.body.confirmPassword;
     const errors = validationResult(req);
+    console.log(errors.array())
 
     if (!errors.isEmpty()) {
         return res.status(422).render(
@@ -105,6 +107,7 @@ exports.postSignup = (req, res, next) => {
                     password: password,
                     confirmPassword: confirmPassword,
                 },
+                validationErrors: errors.array(),
             }));
     };
     bcrypt.hash(password, 12)
