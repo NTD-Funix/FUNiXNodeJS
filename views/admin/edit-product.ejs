@@ -14,6 +14,7 @@
             <div class="form-control">
                 <label for="title">Title</label>
                 <input 
+                    class="<%= validationErrors.find(e => e.param === 'title') ? 'invalid' : ''%>"
                     type="text" 
                     name="title" 
                     id="title" 
@@ -22,6 +23,7 @@
             <div class="form-control">
                 <label for="imageUrl">Image URL</label>
                 <input 
+                    class="<%= validationErrors.find(e => e.param === 'imageUrl') ? 'invalid' : ''%>"
                     type="text" 
                     name="imageUrl" 
                     id="imageUrl" 
@@ -30,6 +32,7 @@
             <div class="form-control">
                 <label for="price">Price</label>
                 <input 
+                    class="<%= validationErrors.find(e => e.param === 'price') ? 'invalid' : ''%>"
                     type="number" 
                     name="price" 
                     id="price" 
@@ -39,6 +42,7 @@
             <div class="form-control">
                 <label for="description">Description</label>
                 <textarea 
+                    class="<%= validationErrors.find(e => e.param === 'description') ? 'invalid' : ''%>"
                     name="description" 
                     id="description" 
                     rows="5"><% if (editing || hasError) { %><%= product.description %><% } %>
