@@ -7,13 +7,13 @@ const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
 
-const transporter = nodemailer.createTransport(
-    sendgridTransport({
-        auth: {
-            api_key: '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'
-        }
-    })
-);
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'daint.funix@gmail.com',
+        pass: 'wjamhwziypoxqzdd'
+    },
+});
 
 exports.getLogin = (req, res, next) => {
     let message = req.flash('error');
@@ -150,7 +150,7 @@ exports.postSignup = (req, res, next) => {
         .then(result => {
             res.redirect('/login');
             return transporter.sendMail({
-                from: 'ntd.mta93@gmail.com',
+                from: 'daint.funix@gmail.com',
                 to: email,
                 subject: 'Sign up succeeded !',
                 html: '<h1>You successfully signed up !</h1>'
@@ -204,7 +204,7 @@ exports.postReset = (req, res, next) => {
             .then(result => {
                 res.redirect('/');
                 transporter.sendMail({
-                    from: 'ntd.mta93@gmail.com',
+                    from: 'daint.funix@gmail.com',
                     to: email,
                     subject: 'Password Reset',
                     html: `
