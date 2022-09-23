@@ -157,10 +157,9 @@ exports.postEditProduct = (req, res, next) => {
         title: updatedTitle,
         price: updatedPrice,
         description: updatedDesc,
-        _id: prodID,
       },
-      errorMessage: errors.array()[0].msg,
-      validationErrors: errors.array(),
+      errorMessage: 'Attached file is not an image.',
+      validationErrors: [],
     })
   };
 
