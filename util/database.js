@@ -4,7 +4,7 @@
 // //     host: 'localhost',
 // //     user: 'root',
 // //     database: 'node-complete',
-// //     password: 'Maithuhuyen5893@'
+// //     password: '********************'
 // // });
 
 // // module.exports = pool.promise();
