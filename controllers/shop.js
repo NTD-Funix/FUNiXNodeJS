@@ -171,7 +171,18 @@ exports.getInvoice = (req, res, next) => {
       pdfDoc.pipe(fs.createWriteStream(invoicePath));
       pdfDoc.pipe(res);
 
-      pdfDoc.text('Hello World!');
+      pdfDoc.fontSize(26).text('Invoice' + ' - ' + order._id.toString(), {
+        underline: true,
+      });
+      pdfDoc.fontSize(14).text('-------------------');
+      let totalPrice = 0;
+      order.products.forEach(prod => {
+        totalPrice += prod.quantity * prod.product.price;
+        pdfDoc.text(prod.product.title + ' - ' + prod.quantity + ' x ' + '$' + prod.product.price);
+      });
+      pdfDoc.text('-------------------');
+      pdfDoc.fontSize(20).text('Total Price: $' + totalPrice);
+
       pdfDoc.end();
 
       //---------******** Đọc file pdf có dung lượng nhỏ. ********---------
